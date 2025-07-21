@@ -1,6 +1,7 @@
+##Readme
 Находясь в корневой папке запустить проект командой go run main.go
 
-End point'ы:
+#End point'ы:
 
 1) создание задачи http://localhost:8080/createTask 
 пример тела запроса:
