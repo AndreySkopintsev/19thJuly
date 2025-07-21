@@ -78,7 +78,7 @@ func TestCreateTaskHandler(t *testing.T) {
 
 			}
 
-			createdTasks = map[string][]string{}
+			createdTasks = map[string]Task{}
 		})
 	}
 }

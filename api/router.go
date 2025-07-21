@@ -17,7 +17,7 @@ type Route struct {
 var Routes []Route = []Route{
 	{Name: "create task", Path: "/createTask", Action: "POST", Handler: CreateTaskHandler},
 	{Name: "add link to task", Path: "/addLink", Action: "POST", Handler: AddLinksToTask},
-	{Name: "get task status", Path: "/getTaskStatus", Action: "GET", Handler: func(w http.ResponseWriter, r *http.Request) {}},
+	{Name: "get task status", Path: "/getTaskStatus", Action: "GET", Handler: GetTaskStatus},
 }
 
 func NewRouter() *mux.Router {

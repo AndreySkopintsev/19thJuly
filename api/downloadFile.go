@@ -2,19 +2,32 @@ package api
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 var ErrExtension = errors.New("invalid extension")
 
 // https://gophercoding.com/download-a-file/ implementation
-func DownloadFile(filename string, url string) error {
+func DownloadFile(filename string, url, directoryName string) error {
+	directoryName = strings.Trim(directoryName, "./")
+	currentPath, err := os.Getwd()
 
+	if err != nil {
+		fmt.Println("Error getting current working directory:", err)
+	}
+	err = os.MkdirAll(currentPath+"/"+directoryName, os.ModePerm)
+	if err != nil {
+		fmt.Println("Error creating directory:", err)
+	}
+	fmt.Printf("current path %s\n", currentPath)
 	// Get the data
+	fmt.Println(url + "\n")
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
@@ -26,7 +39,7 @@ func DownloadFile(filename string, url string) error {
 	if err != nil {
 		return err
 	}
-	out, err := os.Create("./downloads/" + filename + extension)
+	out, err := os.Create(currentPath + "/" + directoryName + "/" + filename + extension)
 	if err != nil {
 		return err
 	}

@@ -13,25 +13,25 @@ func AddLinksToTask(w http.ResponseWriter, r *http.Request) {
 	newRequestBody := RequestBody{}
 	err := json.NewDecoder(r.Body).Decode(&newRequestBody)
 	if err != nil {
-		WriteResponse(FailedTaskId, false, err.Error(), w, http.StatusBadRequest)
+		WriteResponse(FailedTaskId, false, err.Error(), w, http.StatusBadRequest, LinkNotReady)
 		return
 	}
 
 	if task, ok := createdTasks[taskId]; !ok {
-		WriteResponse(FailedTaskId, false, ErrNoTaskFound.Error(), w, http.StatusBadRequest)
+		WriteResponse(FailedTaskId, false, ErrNoTaskFound.Error(), w, http.StatusBadRequest, LinkNotReady)
 		return
 	} else {
-		if len(task) >= common.NumberOfLinks {
-			WriteResponse(FailedTaskId, false, ErrTaskLinks.Error(), w, http.StatusBadRequest)
+		if len(task.Links) >= common.NumberOfLinks {
+			WriteResponse(FailedTaskId, false, ErrTaskLinks.Error(), w, http.StatusBadRequest, LinkNotReady)
 			return
 		}
 		for _, link := range newRequestBody.Links {
-			task = append(task, link)
-			if len(task) == common.NumberOfLinks {
+			task.Links = append(task.Links, link)
+			if len(task.Links) == common.NumberOfLinks {
 				break
 			}
 		}
 		createdTasks[taskId] = task
-		WriteResponse(taskId, true, LinkAdded, w, http.StatusOK)
+		WriteResponse(taskId, true, LinkAdded, w, http.StatusOK, LinkNotReady)
 	}
 }

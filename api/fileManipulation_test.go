@@ -17,7 +17,7 @@ func TestDownloadJPEG(t *testing.T) {
 	t.Run("donwloading a png", func(t *testing.T) {
 		url := "https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikipedia_logo_593.jpg?20060603094750"
 
-		err := DownloadFile("saveas", url)
+		err := DownloadFile("saveas", url, TestFilesPath)
 		if err != nil {
 			fmt.Println("Error downloading file: ", err)
 			return

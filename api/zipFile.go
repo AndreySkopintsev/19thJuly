@@ -2,41 +2,47 @@ package api
 
 import (
 	"archive/zip"
-	"bytes"
-	"log"
+	"fmt"
+	"io"
 	"os"
 )
+
+// useful link https://earthly.dev/blog/golang-zip-files/
 
 func CreateAnArchive(directory string) error {
 	fileNames, err := GetFilesInADirectory(directory)
 	if err != nil {
 		return err
 	}
-	buf := new(bytes.Buffer)
+	zipFile, err := os.Create(directory + "/" + "archive.zip")
+	if err != nil {
+		return err
+	}
+	defer zipFile.Close()
 
-	w := zip.NewWriter(buf)
+	zipw := zip.NewWriter(zipFile)
 
 	for _, fileName := range fileNames {
-		f, err := w.Create(fileName)
+		fileToZip, err := os.Open(directory + "/" + fileName)
 		if err != nil {
-			log.Fatal(err)
+			return err
 		}
-		_, err = f.Write([]byte(directory + "/" + fileName))
+		defer fileToZip.Close()
+
+		w1, err := zipw.Create(fileName)
 		if err != nil {
-			log.Fatal(err)
+			fmt.Printf("couldnt create in zip with error %s", err.Error())
+			return err
 		}
+
+		if _, err := io.Copy(w1, fileToZip); err != nil {
+			fmt.Printf("couldnt crcopy file with error %s", err.Error())
+			return err
+		}
+
 	}
 
-	err = os.WriteFile(directory+"/"+"data.zip", buf.Bytes(), os.ModePerm)
-	if err != nil {
-		panic(err)
-	}
-
-	err = w.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	zipw.Close()
 	return nil
 }
 
