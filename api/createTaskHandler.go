@@ -18,12 +18,13 @@ const (
 )
 
 var (
-	ErrBadJson        = errors.New("couldnt parse received JSON, please check and send again")
-	ErrNumOfLinks     = errors.New(fmt.Sprintf("too many links provided, please reduce the number of links to %d", common.NumberOfLinks))
-	ErrNumOfTasks     = errors.New(fmt.Sprintf("there are already %d tasks in progress, please try adding new tasks later", common.NumberOfTasks))
-	ErrNoTaskFound    = errors.New("no task with provided id was found")
-	ErrTaskLinks      = errors.New(fmt.Sprintf("this task already has %d links", common.NumberOfLinks))
-	ErrCouldntArchive = errors.New("coudlnt create archive")
+	ErrBadJson            = errors.New("couldnt parse received JSON, please check and send again")
+	ErrNumOfLinks         = errors.New(fmt.Sprintf("too many links provided, please reduce the number of links to %d", common.NumberOfLinks))
+	ErrNumOfTasks         = errors.New(fmt.Sprintf("there are already %d tasks in progress, please try adding new tasks later", common.NumberOfTasks))
+	ErrNoTaskFound        = errors.New("no task with provided id was found")
+	ErrTaskLinks          = errors.New(fmt.Sprintf("this task already has %d links", common.NumberOfLinks))
+	ErrCouldntArchive     = errors.New("coudlnt create archive")
+	ErrForbiddenExtension = errors.New("this extension is not supported")
 )
 
 var createdTasks map[string]Task = map[string]Task{}

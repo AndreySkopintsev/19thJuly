@@ -1,6 +1,7 @@
 package api
 
 import (
+	"common"
 	"errors"
 	"fmt"
 	"os"
@@ -12,6 +13,10 @@ import (
 const (
 	TestFilesPath = "./testFiles"
 )
+
+func init() {
+	common.Init()
+}
 
 func TestDownloadJPEG(t *testing.T) {
 	t.Run("donwloading a png", func(t *testing.T) {
@@ -36,15 +41,9 @@ func TestGetFileExtension(t *testing.T) {
 		ExpectedError     error
 	}{
 		{
-			Name:              "link to a png file",
-			RawURL:            "https://gophercoding.com/img/logo-original.png",
-			ExpectedExtension: ".png",
-			ExpectedError:     nil,
-		},
-		{
 			Name:              "link to a jpg file",
-			RawURL:            "https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikipedia_logo_593.jpg?20060603094750",
-			ExpectedExtension: ".jpg",
+			RawURL:            "https://upload.wikimedia.org/wikipedia/commons/f/ff/Wikipedia_logo_593.jpeg?20060603094750",
+			ExpectedExtension: ".jpeg",
 			ExpectedError:     nil,
 		},
 		{
@@ -52,6 +51,12 @@ func TestGetFileExtension(t *testing.T) {
 			RawURL:            "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf",
 			ExpectedExtension: ".pdf",
 			ExpectedError:     nil,
+		},
+		{
+			Name:              "link to a epub file",
+			RawURL:            "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.epub",
+			ExpectedExtension: "",
+			ExpectedError:     ErrForbiddenExtension,
 		},
 	}
 

@@ -1,6 +1,7 @@
 package api
 
 import (
+	"common"
 	"errors"
 	"fmt"
 	"io"
@@ -8,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 )
 
@@ -58,5 +60,10 @@ func GetFileExtension(rawURL string) (string, error) {
 	}
 
 	filePath := parsedUrl.Path
+	ext := filepath.Ext(filePath)
+	fmt.Printf("allowed extensions are %+v\n", common.AllowedExtensions)
+	if !slices.Contains(common.AllowedExtensions, ext) {
+		return "", ErrForbiddenExtension
+	}
 	return filepath.Ext(filePath), nil
 }
