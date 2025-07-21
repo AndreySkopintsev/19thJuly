@@ -12,6 +12,10 @@
 }
 ```
 
+```
+{"Success":true,"TaskId":"e7539251-ddaa-4dc6-a4c0-b69fc9fd820f","Message":"Task created","ArchiveLink":"Link isnt ready yet, the task is still in progress"}
+```
+
 2) **добавление ссылок в существующую задачу**
 http://localhost:8080/addLink?taskid=36f1a9d1-87dc-4f54-bde2-c8435a8b6e73
 в taskid следует подставить id задачи полученный при использовании http://localhost:8080/createTask
