@@ -15,7 +15,7 @@ type Route struct {
 
 // TODO add handlers
 var Routes []Route = []Route{
-	{Name: "create task", Path: "/createTask", Action: "POST", Handler: func(w http.ResponseWriter, r *http.Request) {}},
+	{Name: "create task", Path: "/createTask", Action: "POST", Handler: CreateTaskHandler},
 	{Name: "add link to task", Path: "/addLink", Action: "POST", Handler: func(w http.ResponseWriter, r *http.Request) {}},
 	{Name: "get task status", Path: "/getTaskStatus", Action: "GET", Handler: func(w http.ResponseWriter, r *http.Request) {}},
 }
