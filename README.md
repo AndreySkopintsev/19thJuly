@@ -3,7 +3,7 @@
 
 # End point'ы:
 
-1) **создание задачи** http://localhost:8080/createTask 
+1) **создание задачи**: http://localhost:8080/createTask \n
 пример тела запроса:
 ```
 {
@@ -12,7 +12,7 @@
 ```
 
 3) **добавление ссылок в существующую задачу**
-http://localhost:8080/addLink?taskid=36f1a9d1-87dc-4f54-bde2-c8435a8b6e73
+http://localhost:8080/addLink?taskid=36f1a9d1-87dc-4f54-bde2-c8435a8b6e73 \n
 
 пример тела запроса:
 ```
@@ -21,6 +21,6 @@ http://localhost:8080/addLink?taskid=36f1a9d1-87dc-4f54-bde2-c8435a8b6e73
 }
 ```
 
-3) проверка статуса задачи/получение архива:
+3) **проверка статуса задачи/получение архива**:
 http://localhost:8080/getTaskStatus?taskid=e7539251-ddaa-4dc6-a4c0-b69fc9fd820f
 
