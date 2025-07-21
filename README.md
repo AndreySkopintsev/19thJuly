@@ -3,7 +3,8 @@
 
 # End point'ы:
 
-1) **создание задачи**: http://localhost:8080/createTask \n
+1) **создание задачи**: http://localhost:8080/createTask
+   
 пример тела запроса:
 ```
 {
@@ -12,7 +13,7 @@
 ```
 
 3) **добавление ссылок в существующую задачу**
-http://localhost:8080/addLink?taskid=36f1a9d1-87dc-4f54-bde2-c8435a8b6e73 \n
+http://localhost:8080/addLink?taskid=36f1a9d1-87dc-4f54-bde2-c8435a8b6e73 
 
 пример тела запроса:
 ```
