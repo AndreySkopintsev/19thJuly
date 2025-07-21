@@ -1,8 +1,10 @@
 package api
 
 import (
+	"common"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -11,12 +13,15 @@ import (
 const (
 	FailedTaskId  = "-1"
 	TaskAddedText = "Task created"
+	LinkAdded     = "Link added"
 )
 
 var (
-	ErrBadJson    = errors.New("couldnt parse received JSON, please check and send again")
-	ErrNumOfLinks = errors.New("too many links provided, please reduce the number of links to 3")
-	ErrNumOfTasks = errors.New("there are already 3 tasks in progress, please try adding new tasks later")
+	ErrBadJson     = errors.New("couldnt parse received JSON, please check and send again")
+	ErrNumOfLinks  = errors.New(fmt.Sprintf("too many links provided, please reduce the number of links to %d", common.NumberOfLinks))
+	ErrNumOfTasks  = errors.New(fmt.Sprintf("there are already %d tasks in progress, please try adding new tasks later", common.NumberOfTasks))
+	ErrNoTaskFound = errors.New("no task with provided id was found")
+	ErrTaskLinks   = errors.New(fmt.Sprintf("this task already has %d links", common.NumberOfLinks))
 )
 
 var createdTasks map[string][]string = map[string][]string{}
@@ -43,15 +48,14 @@ func CreateTaskHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// TODO 3 should be an environment variable instead
-	if len(newRequestBody.Links) > 3 {
+	if len(newRequestBody.Links) > common.NumberOfLinks {
 		WriteResponse(FailedTaskId, false, ErrNumOfLinks.Error(), w, http.StatusBadRequest)
 		return
 	}
 	newTaskId := uuid.New().String()
 
 	createdTasks[newTaskId] = newRequestBody.Links
-	WriteResponse(newTaskId, true, "Task created", w, http.StatusOK)
+	WriteResponse(newTaskId, true, TaskAddedText, w, http.StatusOK)
 }
 
 func WriteResponse(taskId string, successStatus bool, message string, w http.ResponseWriter, httpStatus int) {
